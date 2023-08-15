@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { BsArrowReturnLeft } from "react-icons/bs";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const CarDetails: React.FC = () => {
@@ -10,7 +11,7 @@ const CarDetails: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const DUMMY_DATA = {
+  const carTest = {
     make: "FORD",
     model: "f1",
     package: "Base",
@@ -57,13 +58,13 @@ const CarDetails: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  // if (error) {
+  //   return <div>{error}</div>;
+  // }
 
-  if (!car) {
-    return <div>No data available.</div>;
-  }
+  // if (!car) {
+  //   return <div>No data available.</div>;
+  // }
 
   return (
     <div className='flex justify-center items-center min-h-screen bg-gray-100'>
@@ -81,59 +82,45 @@ const CarDetails: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className='flex justify-between items-start px-2 pt-2'>
-            <div className='w-1/2'>
+          <div className='flex justify-between items-start px-2 pt-2 flex-wrap'>
+            <div className='w-full md:w-1/3'>
               <div className='p-2 flex-grow'>
                 <h1 className='font-medium text-xl font-poppins'>
-                  Make: {car.make}
+                  Make: {carTest.make}
                 </h1>
+                <p className='text-gray-500 font-nunito'>Model: {carTest.model}</p>
                 <p className='text-gray-500 font-nunito'>
-                  Model: {car.model}
+                  Package: {carTest.package}
                 </p>
-                <p className='text-gray-500 font-nunito'>
-                  Package: {car.package}
-                </p>
-                <p className='text-gray-500 font-nunito'>
-                  Color: {car.color}
-                </p>
+                <p className='text-gray-500 font-nunito'>Color: {carTest.color}</p>
               </div>
             </div>
-            <div className='w-1/2'>
+            <div className='w-full md:w-1/3'>
               <div className='p-2 flex-grow'>
                 <p className='text-gray-500 font-nunito'>
-                  Category: {car.category}
+                  Category: {carTest.category}
                 </p>
                 <p className='text-gray-500 font-nunito'>
-                  Mileage: {car.mileage}
+                  Mileage: {carTest.mileage}
                 </p>
-                <p className='text-gray-500 font-nunito'>
-                  Year: {car.year}
-                </p>
-                <p className='text-gray-500 font-nunito'>ID: {car.id}</p>
+                <p className='text-gray-500 font-nunito'>Year: {carTest.year}</p>
+                <p className='text-gray-500 font-nunito'>ID: {carTest.id}</p>
               </div>
             </div>
-            <div className='p-2 text-right'>
+            <div className='p-2 md:text-right w-full md:w-1/3'>
               <div className='text-teal-500 font-semibold text-lg font-poppins'>
-                ${car.price}
+                ${carTest.price}
               </div>
             </div>
           </div>
           <div className='flex justify-center items-center px-2 pb-2'>
             <div className='w-1/2 p-2'>
-              <button className='block w-full bg-teal-500 hover:bg-teal-600 text-white border-2 border-teal-500 hover:border-teal-600 px-3 py-2 rounded uppercase font-poppins font-medium'>
-                <svg viewBox='0 0 24 24' className='inline w-4 h-4'>
-                  <path
-                    fill='currentColor'
-                    d='M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z'
-                  />
-                </svg>{" "}
-                Details
-              </button>
-            </div>
-            <div className='w-1/2 p-2'>
-              <button className='block w-full bg-white hover:bg-gray-100 text-teal-500 border-2 border-teal-500 px-3 py-2 rounded uppercase font-poppins font-medium'>
-                Add to cart
-              </button>
+              <Link to='/'>
+                <button className='block w-full bg-teal-500 hover:bg-teal-600 text-white border-2 border-teal-500 hover:border-teal-600 px-3 py-2 rounded uppercase font-poppins font-medium'>
+                  {BsArrowReturnLeft}
+                  Return
+                </button>
+              </Link>
             </div>
           </div>
         </div>
