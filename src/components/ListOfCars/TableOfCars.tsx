@@ -1,9 +1,10 @@
+import useRegisterModal from "../../hooks/useRegisterModal";
 import Table from "../Table/Table";
-import { CarContentProps } from "../../types";
+import { useEffect, useState } from "react";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 interface TableDataProps {
   title: string[];
-  content: CarContentProps[];
 }
 
 const tableData: TableDataProps = {
@@ -18,23 +19,56 @@ const tableData: TableDataProps = {
     "Price (cents)",
     "id",
   ],
-  content: [
-    {
-      make: "FORD",
-      model: "f1",
-      package: "Base",
-      color: "Silver",
-      category: "Truck",
-      mileage: 231.23,
-      price: 39799.23,
-      year: 2010,
-      id: "64db6f40c836ac02a7c9f6a0"
-    }
-  ],
 };
 
 const TableOfCars = () => {
-  return <Table title={tableData.title} content={tableData.content} />;
+  const [cars, setCars] = useState([]);
+  const [error, setError] = useState("");
+  const registerModal = useRegisterModal();
+
+  useEffect(() => {
+    fetch(`${apiUrl}cars`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data: ", data);
+        if (!data.success) {
+          setError("An error occurred while fetching data.");
+        } else if (data.data && data.data.length) {
+          const carData = data.data.map((value) => ({
+            make: value.make,
+            model: value.model,
+            package: value.package,
+            color: value.color,
+            year: value.year,
+            category: value.category,
+            mileage: value.mileage,
+            price: value.price,
+            id: value.id,
+          }));
+          setCars(carData);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  return (
+    <>
+      {error ? (
+        <p>{error}</p>
+      ) : (
+        <div className='container mx-auto px-6 sm:px-8 py-10'>
+          <div className='flex justify-end'>
+            <button onClick={registerModal.onOpen} className='bg-gray-200 hover:bg-gray-300 transition ease-in-out delay-50 px-3 py-1 rounded-sm'>
+              Add Car +
+            </button>
+          </div>
+          <Table tableTitle='My Cars' title={tableData.title} content={cars} />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default TableOfCars;
