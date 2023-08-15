@@ -1,10 +1,11 @@
-function App() {
+import TableOfCars from "./components/ListOfCars/TableOfCars";
 
+function App() {
   return (
     <>
-      <h1 className="">Cars List Challenge</h1>
+      <TableOfCars />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
