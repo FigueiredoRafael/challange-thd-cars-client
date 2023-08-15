@@ -47,7 +47,7 @@ const Table: React.FC<TableProps> = ({ tableTitle, title, content }) => {
               </td>
             ))}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-              <Link to='/123'>
+              <Link to={`/${item.id}`}>
                 <span className='relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight bg-gray-200 hover:bg-gray-300 cursor-pointer rounded-md'>
                   <span
                     aria-hidden

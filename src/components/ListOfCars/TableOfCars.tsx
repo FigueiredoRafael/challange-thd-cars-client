@@ -28,8 +28,11 @@ const TableOfCars = () => {
   const registerModal = useRegisterModal();
 
   useEffect(() => {
+    // Create a cancel token source
+    const source = axios.CancelToken.source();
+
     axios
-      .get(`${apiUrl}cars`)
+      .get(`${apiUrl}cars`, { cancelToken: source.token })
       .then((response) => {
         const data = response.data;
         console.log("data: ", data);
@@ -51,8 +54,15 @@ const TableOfCars = () => {
         }
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        if (!axios.isCancel(error)) {
+          console.error("Error fetching data:", error);
+        }
       });
+
+    // Cleanup: cancel the request on component unmount
+    return () => {
+      source.cancel("Request canceled due to component unmount");
+    };
   }, []);
 
   return (
@@ -62,7 +72,10 @@ const TableOfCars = () => {
       ) : (
         <div className='container mx-auto px-6 sm:px-8 py-10'>
           <div className='flex justify-end'>
-            <button onClick={registerModal.onOpen} className='bg-gray-200 hover:bg-gray-300 transition ease-in-out delay-50 px-3 py-1 rounded-sm'>
+            <button
+              onClick={registerModal.onOpen}
+              className='bg-gray-200 hover:bg-gray-300 transition ease-in-out delay-50 px-3 py-1 rounded-sm'
+            >
               Add Car +
             </button>
           </div>
