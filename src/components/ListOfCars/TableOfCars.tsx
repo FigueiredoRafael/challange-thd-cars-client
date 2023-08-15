@@ -1,3 +1,4 @@
+import axios from "axios";
 import useRegisterModal from "../../hooks/useRegisterModal";
 import Table from "../Table/Table";
 import { useEffect, useState } from "react";
@@ -27,9 +28,10 @@ const TableOfCars = () => {
   const registerModal = useRegisterModal();
 
   useEffect(() => {
-    fetch(`${apiUrl}cars`)
-      .then((response) => response.json())
-      .then((data) => {
+    axios
+      .get(`${apiUrl}cars`)
+      .then((response) => {
+        const data = response.data;
         console.log("data: ", data);
         if (!data.success) {
           setError("An error occurred while fetching data.");

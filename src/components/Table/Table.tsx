@@ -1,10 +1,11 @@
 import React from "react";
 import { CarContentProps } from "../../types";
+import { Link } from "react-router-dom";
 
 interface TableProps {
   title: string[];
   content: CarContentProps[];
-  tableTitle: string
+  tableTitle: string;
 }
 
 const Table: React.FC<TableProps> = ({ tableTitle, title, content }) => {
@@ -45,6 +46,17 @@ const Table: React.FC<TableProps> = ({ tableTitle, title, content }) => {
                 </div>
               </td>
             ))}
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+              <Link to='/123'>
+                <span className='relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight bg-gray-200 hover:bg-gray-300 cursor-pointer rounded-md'>
+                  <span
+                    aria-hidden
+                    className='absolute inset-0 opacity-50'
+                  ></span>
+                  <span className='relative'>Details</span>
+                </span>
+              </Link>
+            </td>
           </tr>
         ))}
       </tbody>
