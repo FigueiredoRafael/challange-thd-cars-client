@@ -11,20 +11,7 @@ const CarDetails: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const carTest = {
-    make: "FORD",
-    model: "f1",
-    package: "Base",
-    color: "Silver",
-    category: "Truck",
-    mileage: 231.23,
-    price: 39799.23,
-    year: 2010,
-    id: "64db6f40c836ac02a7c9f6a0",
-  };
-
   useEffect(() => {
-    // Create a cancel token source
     const source = axios.CancelToken.source();
 
     axios
@@ -46,7 +33,6 @@ const CarDetails: React.FC = () => {
         }
       });
 
-    // Cleanup: cancel the request on component unmount or when the dependency changes
     return () => {
       source.cancel(
         "Request canceled due to component unmount or dependency change"
@@ -58,13 +44,13 @@ const CarDetails: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  // if (error) {
-  //   return <div>{error}</div>;
-  // }
+  if (error) {
+    return <div>{error}</div>;
+  }
 
-  // if (!car) {
-  //   return <div>No data available.</div>;
-  // }
+  if (!car) {
+    return <div>No data available.</div>;
+  }
 
   return (
     <div className='flex justify-center items-center min-h-screen bg-gray-100'>
@@ -86,30 +72,30 @@ const CarDetails: React.FC = () => {
             <div className='w-full md:w-1/3'>
               <div className='p-2 flex-grow'>
                 <h1 className='font-medium text-xl font-poppins'>
-                  Make: {carTest.make}
+                  Make: {car.make}
                 </h1>
-                <p className='text-gray-500 font-nunito'>Model: {carTest.model}</p>
+                <p className='text-gray-500 font-nunito'>Model: {car.model}</p>
                 <p className='text-gray-500 font-nunito'>
-                  Package: {carTest.package}
+                  Package: {car.package}
                 </p>
-                <p className='text-gray-500 font-nunito'>Color: {carTest.color}</p>
+                <p className='text-gray-500 font-nunito'>Color: {car.color}</p>
               </div>
             </div>
             <div className='w-full md:w-1/3'>
               <div className='p-2 flex-grow'>
                 <p className='text-gray-500 font-nunito'>
-                  Category: {carTest.category}
+                  Category: {car.category}
                 </p>
                 <p className='text-gray-500 font-nunito'>
-                  Mileage: {carTest.mileage}
+                  Mileage: {car.mileage}
                 </p>
-                <p className='text-gray-500 font-nunito'>Year: {carTest.year}</p>
-                <p className='text-gray-500 font-nunito'>ID: {carTest.id}</p>
+                <p className='text-gray-500 font-nunito'>Year: {car.year}</p>
+                <p className='text-gray-500 font-nunito'>ID: {car.id}</p>
               </div>
             </div>
             <div className='p-2 md:text-right w-full md:w-1/3'>
               <div className='text-teal-500 font-semibold text-lg font-poppins'>
-                ${carTest.price}
+                ${car.price}
               </div>
             </div>
           </div>

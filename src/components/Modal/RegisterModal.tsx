@@ -34,6 +34,10 @@ const RegisterModal = () => {
       .post(`${apiUrl}cars`, data)
       .then(() => {
         toast.success("Congratulations!");
+        // It needs to re-render the table component once car registered, for now it will only reload the page for demo purposes
+        setTimeout(() => {
+          window.location.reload();
+        }, 300);
         registerModal.onClose();
       })
       .catch(() => {
